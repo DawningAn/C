@@ -204,31 +204,84 @@
 //    return 0;
 //}
 
-char* myStrstr(const char* str1, const char* str2) {
-	//考虑两个指针来控制检索两个字符串
-	const char* s1 = str1;
-	const char* s2 = str2;
-	const char* p = str1;
-	while (*p) {
-		s1 = p;
-		s2 = str2;
-		while ((*s1 == *s2) && *s1 != '\0' && *s2 != '\0') {
-			s1++;
-			s2++;
-		}
-		p++;  //记录开始匹配的位置
-		if (*s2 == '\0') {
-			return (char*)p;  //找到子串
-		}
-	}
-	return NULL;  //找不到子串
+//char* myStrstr(const char* str1, const char* str2) {
+//	//考虑两个指针来控制检索两个字符串
+//	const char* s1 = str1;
+//	const char* s2 = str2;
+//	const char* p = str1;
+//	while (*p) {
+//		s1 = p;
+//		s2 = str2;
+//		while ((*s1 == *s2) && *s1 != '\0' && *s2 != '\0') {
+//			s1++;
+//			s2++;
+//		}
+//		p++;  //记录开始匹配的位置
+//		if (*s2 == '\0') {
+//			return (char*)p;  //找到子串
+//		}
+//	}
+//	return NULL;  //找不到子串
+//}
+//int main() {
+//	char arr1[] = "dadwadwa";
+//	char arr2[] = "adw";
+//	printf("%s\n", myStrstr(arr1, arr2));
+//	return 0;
+//}
+
+//strtok函数
+//char * strtok ( char * str, const char * sep );
+//字符串分割，以特定字符对字符串进行分割
+//int main() {
+//	char arr[] = "www.HUAWEI@petal.com";
+//	char buf[200] = { 0 };
+//	strcpy(buf, arr);
+//	//定义分割符的集合
+//	const char* p = "@.";
+//	char* str = NULL;
+//
+//	for (str = strtok(buf, p); str != NULL;str=strtok(NULL,p) ){
+//		printf("%s\n",str);
+//
+//	}
+//}
+
+//strerror
+/* strerror example : error list */
+//#include <stdio.h>
+//#include <string.h>
+//#include <errno.h>  //必须包含的头文件
+//int main()
+//{
+//    FILE* pFile;
+//    pFile = fopen("unexist.ent", "r");
+//    if (pFile == NULL)  //意味着调用（打开文件）失败
+//        printf("Error opening file unexist.ent: %s\n", strerror(errno));  //errno为全局存放着错误码
+//    //errno: Last error number
+//    return 0; 
+//}
+
+//字符转换函数
+/* isupper example */
+#include <stdio.h>
+#include <ctype.h>
+int main()
+{
+    int i = 0;
+    char str[] = "Test String.\n";
+    char c;
+    while (str[i])
+    {
+        c = str[i];
+        if (isupper(c))
+            c = tolower(c);
+        putchar(c);
+        i++;
+    }
+    return 0;
 }
-int main() {
-	char arr1[] = "dadwadwa";
-	char arr2[] = "adw";
-	printf("%s\n", myStrstr(arr1, arr2));
-	return 0;
-}
+
 
 
 
