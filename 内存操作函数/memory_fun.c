@@ -48,8 +48,54 @@
 
 //memset
 //以内存字节数来设置值
-int main() {
-	int arr[] = { 1,2,3,4,5 };
-	memset(arr, 0, 12);
+//int main() {
+//	int arr[] = { 1,2,3,4,5 };
+//	memset(arr, 0, 12);
+//	return 0;
+//}
+
+//实现memmove	(实现重叠内存的拷贝)
+//void* memmove(void* destination, const void* source, size_t num);
+#include <assert.h>
+
+void* myMemmove(void* dest, void* src, size_t num)
+{
+	void* ret = dest;
+	assert(dest);
+	assert(src);
+
+	if (dest < src)//1 前->后
+	{
+		while(num--)
+		{
+			*(char*)dest = *(char*)src;
+			dest = (char*)dest + 1;
+			src = (char*)src + 1;
+		}
+	}
+	else //2 3 后->前
+	{
+		while (num--)
+		{
+			*((char*)dest + num) = *((char*)src + num);
+		}
+	}
+	return ret;
+}
+
+
+//memcpy只需要实现不重叠的拷贝就可以了 - 60 100
+//memmove是需要实现重叠内存的拷贝的
+
+int main()
+{
+	int arr1[] = { 1,2,3,4,5,6,7,8,9,10 };
+	int arr2[10] = { 0 };
+	myMemmove(arr2, arr1, 20);
+
+	for (int i = 0; i < 10; i++)
+	{
+		printf("%d ", arr2[i]);
+	}
 	return 0;
 }
