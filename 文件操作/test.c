@@ -107,17 +107,94 @@ struct Stu {
 //	fwrite(&s, sizeof(s), 1, pf);
 //}
 
-int main() {
-	struct Stu s = { 0 };
-	FILE* pf = fopen("test.txt", "rb");  //二进制读取
-	if (NULL == pf) {
-		perror("fopen\n");
-		return 1;
-	}
-	//size_t fread ( void * ptr, size_t size, size_t count, FILE * stream )
-	//从文件流里读取count个大小为size的数据到ptr所指向的空间去
-	fread(&s,sizeof(s),1,pf);
+//int main() {
+//	struct Stu s = { 0 };
+//	FILE* pf = fopen("test.txt", "rb");  //二进制读取
+//	if (NULL == pf) {
+//		perror("fopen\n");
+//		return 1;
+//	}
+//	//size_t fread ( void * ptr, size_t size, size_t count, FILE * stream )
+//	//从文件流里读取count个大小为size的数据到ptr所指向的空间去
+//	fread(&s,sizeof(s),1,pf);
+//
+//	printf("%s %d %f\n", s.name, s.age, s.height);
+//	return 0;
+//}
 
-	printf("%s %d %f\n", s.name, s.age, s.height);
+//int main() {
+//	struct Stu s = { "张三",10,12.8f };
+//	struct Stu tmp = { 0 };
+//
+//
+//	char buf[40] = { 0 };
+//	//结构体数据转换成字符串
+//	sprintf(buf,"%s %d %f\n", s.name, s.age, s.height);
+//
+//	printf("%s", buf);
+//
+//	//将buf还原为结构体
+//	sscanf(buf, "%s %d %f", tmp.name, &(tmp.age), &(tmp.height));
+//	printf("%s %d %f\n", tmp.name, tmp.age, tmp.height);
+//	return 0;
+//}
+
+//int main() {
+//	FILE* pf = fopen("test.txt", "r");  //abcfgh
+//	if (pf == NULL) {
+//		perror("fopen\n");
+//		return 1;
+//	}
+//	//随机读文件
+//	fseek(pf, 4, SEEK_SET);
+//	int tmp = fgetc(pf);
+//	printf("%c\n", tmp);
+//	//获取当前偏移量
+//	printf("%d\n",ftell(pf));
+//
+//	//rewind让pf回到起始位置
+//	rewind(pf);
+//	printf("%d\n", ftell(pf));
+//
+//	return 0;
+//}
+
+//int main() {
+//	int a = 10000;
+//	FILE* pf = fopen("test.txt", "wb");
+//	fwrite(&a, 4, 1, pf);  //二进制的形式写到文件中
+//
+//	fclose(pf);
+//	pf = NULL;
+//	return 0;
+//}
+
+//fgetc
+//读取失败返回EOF
+//而读取成功，会返回读到字符的ASCII码值
+
+//fgets
+//返回的是存放读到的数据str空间的起始地址
+//读取失败，则返回NULL；
+
+//fscanf读取成功，返回的是读到的元素个数
+//否则不成功
+
+#include <Windows.h>
+int main() {
+	FILE* pf = fopen("test.txt", "w");
+	fputs("abcdef", pf);//先将代码放在输出缓冲区
+
+	printf("睡眠10秒-已经写数据了，打开test.txt文件，发现文件没有内容\n");
+	Sleep(10000);  //毫秒——>10s
+	printf("刷新缓冲区\n");
+	fflush(pf);//刷新缓冲区时，才将输出缓冲区的数据写到文件（磁盘）
+	//注：fflush 在高版本的VS上不能使用了
+
+	printf("再睡眠10秒-此时，再次打开test.txt文件，文件有内容了\n");
+	Sleep(10000);
+	fclose(pf);
+	//注：fclose在关闭文件的时候，也会刷新缓冲区
+	pf = NULL;
 	return 0;
 }
