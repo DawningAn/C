@@ -12,6 +12,15 @@
                           date:%s\ttime:%s\n" ,\
 							__FILE__,__LINE__ ,\
 							__DATE__,__TIME__ )
+//int main() {
+//	printf("%s\n", __FILE__);   //进行编译的源文件
+//	printf("%d\n", __LINE__);   //文件当前的行号
+//	printf("%s\n", __DATE__);   //文件被编译的日期
+//	printf("%s\n", __TIME__);   //文件被编译的时间
+//	//printf("%s\n", __STDC__);   //VS环境下未定义__STDC__ ,说明Visual Studio并未完全遵循ANSI C
+//	printf("%s\n", __func__);  //main
+//	return 0;
+//}
 
 //int Max(int x, int y) {
 //	return (x > y ? x : y);
@@ -74,11 +83,106 @@
 //}
 
 //考虑宏的副作用
-#define MAX(a, b) ( (a) > (b) ? (a) : (b) )
+//#define MAX(a, b) ( (a) > (b) ? (a) : (b) )
+//int main() {
+//	int x = 5;
+//	int y = 8;
+//	int z = MAX(x++, y++);
+//	printf("x=%d y=%d z=%d\n", x, y, z);
+//	//z = ((x++) > (y++) ? (x++) : (y++));  x = 6  y = 10  z = 9  
+//}
+
+//#define MAX(a, b) ((a)>(b)?(a):(b))
+////宏通常被应用于执行简单的运算
+//int Max(int a, int b) {
+//	return ((a > b) ? a : b);
+//}
+//int main() {
+//	int a = 5;
+//	int b = 10;
+//	int ret = Max(a, b);
+//	printf("Max number = %d\n", ret);
+//	return 0;
+//}
+
+//#define MALLOC(num, type) (type*)malloc(num * sizeof(type))
+//int main() {
+//	int* p = (int*)malloc(10 * sizeof(int));  //申请10个整形空间
+//	//当需要申请不同类型的空间时
+//	//Malloc(10, int);  //显然，函数不可以传类型，考虑宏
+//	MALLOC(10, int);  //宏的参数可以出现类型，但是函数做不到
+//	return 0;
+//}
+
+//#undef NAME
+//这条指令用于移除一个宏定义
+//# define N 100
+//int main() {
+//	printf("%d\n",N);
+//
+//	#undef N
+//	printf("%d\n", N);
+//	return 0;
+//}
+
+//#define __DEBUG__
+//int main() {
+//	int i = 0;
+//	int arr[10] = { 0 };
+//	for (i = 0; i < 10; i++) {
+//		arr[i] = i;
+//#ifdef __DEBUG__
+//			printf("%d\n", arr[i]);//为了观察数组是否赋值成功。 
+//#endif //__DEBUG__
+//	}
+//	return 0;
+//}
+
+//条件编译
+//int main() {
+//	#if 1  //条件为真，参与编译
+//		printf("可以编译\n");
+//	#endif
+//	return 0;
+//}
+
+//多分支条件编译
+//int main() {
+//#if 3>2
+//	printf("成立\n");
+//#elif 2>5
+//	printf("2>5\n");
+//#else
+//	printf("都不成立\n");
+//#endif
+//
+//	return 0;
+//}
+
+//判断是否被定义
+//#if defined(symbol)
+//#ifdef symbol
+
+//#if !defined(symbol)
+//#ifndef symbol
 int main() {
-	int x = 5;
-	int y = 8;
-	int z = MAX(x++, y++);
-	printf("x=%d y=%d z=%d\n", x, y, z);
-	//z = ((x++) > (y++) ? (x++) : (y++));  x = 6  y = 10  z = 9  
+#if defined MAX
+	printf("MAX 已被定义\n");
+#endif
+
+#ifdef MAX
+	printf("MAX 已被定义\n");
+#endif
+//两者完全等价
+
+//下面两种也是完全等价
+#if !defined M
+	printf("M 未定义\n");
+#endif
+
+#ifndef M
+	printf("M 未定义\n");
+#endif
+
+	return 0;
 }
